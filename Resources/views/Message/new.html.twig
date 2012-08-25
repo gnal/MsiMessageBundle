@@ -1,0 +1,16 @@
+{% extends 'MsiMessageBundle::layout.html.twig' %}
+
+{% block title %}New{% endblock title %}
+
+{% block content %}
+<h1>Compose</h1>
+<hr>
+{% include 'MsiMessageBundle:Message:toolbar.html.twig' %}
+<form novalidate class="form-horizontal" action="#" method="POST" {{ form_enctype(form) }}>
+    {% include 'MsiAdminBundle:Admin:form.html.twig' with {'form': form} %}
+    <div class="form-actions">
+        <button class="btn btn-primary" type="submit">{{ 'Send'|trans }}</button>
+        <a class="btn btn-link" href="#">{{ 'Cancel'|trans }}</a>
+    </div>
+</form>
+{% endblock content %}

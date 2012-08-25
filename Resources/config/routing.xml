@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="msi_message_message_index" pattern="/mail/">
+        <default key="_controller">MsiMessageBundle:Message:index</default>
+    </route>
+
+    <route id="msi_message_message_inbox" pattern="/mail/inbox">
+        <default key="_controller">MsiMessageBundle:Message:inbox</default>
+    </route>
+
+    <route id="msi_message_message_sent" pattern="/mail/sent">
+        <default key="_controller">MsiMessageBundle:Message:sent</default>
+    </route>
+
+    <route id="msi_message_message_trashbox" pattern="/mail/trashbox">
+        <default key="_controller">MsiMessageBundle:Message:trashbox</default>
+    </route>
+
+    <route id="msi_message_message_show" pattern="/mail/show">
+        <default key="_controller">MsiMessageBundle:Message:show</default>
+    </route>
+
+    <route id="msi_message_message_new" pattern="/mail/new">
+        <default key="_controller">MsiMessageBundle:Message:new</default>
+    </route>
+
+    <route id="msi_message_message_trash" pattern="/mail/trash">
+        <default key="_controller">MsiMessageBundle:Message:trash</default>
+    </route>
+
+    <route id="msi_message_message_mark_as_trash" pattern="/mail/{id}/put_in_trash">
+        <default key="_controller">MsiMessageBundle:Message:markAsTrash</default>
+    </route>
+</routes>

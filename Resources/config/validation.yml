@@ -1,0 +1,9 @@
+Msi\Bundle\MessageBundle\Entity\Message:
+    properties:
+        subject:
+            - NotBlank: ~
+        body:
+            - NotBlank: ~
+        recipients:
+            - Count:
+                min: 1

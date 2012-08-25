@@ -1,0 +1,20 @@
+<table class="msi_message_box table table-bordered" style="margin-bottom: 0;">
+    {% for message in messages %}
+        <tr data-id="{{ message.id }}">
+            <td style="vertical-align: middle; padding-right: 4px;">
+                <a href="{{ path('msi_message_message_mark_as_trash', {'id': message.id}) }}"><i class="icon-trash"></i></a>
+            </td>
+            <td>
+                <a class="msi_message_load_message" style="display: block;" href="#inbox/{{ message.id }}">
+                    {% if message.readBy.contains(app.user) == false %}<i id="asterisk{{ message.id }}" class="icon-asterisk"></i>{% endif %}
+                    <small class="pull-right">{{ message.createdAt|date }}</small>
+                    <strong>{{ message.sender }}</strong>
+                    <br>
+                    <small>{{ message.subject|truncate }}</small>
+                    <br>
+                    <small class="muted">{{ message.body|striptags|truncate(45) }}</small>
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>

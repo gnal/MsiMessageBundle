@@ -1,0 +1,84 @@
+{% extends 'MsiMessageBundle::layout.html.twig' %}
+
+{% block title %}Inbox{% endblock title %}
+
+{% block js %}
+{{ parent() }}
+<script>
+(function($) {
+    "use strict";
+    $('table.msi_message_box').on('click', 'tr', function() {
+        var $this = $(this);
+        $('table.msi_message_box').find('tr').each(function(i, e) {
+            $(e).removeClass('info');
+        });
+        $this.addClass('info');
+    });
+    $('.msi_message_delete').on('click', function(e) {
+        var $this = $(this);
+        var ids = [];
+        $('table.msi_message_box').find('tr').each(function(i, e) {
+            var $e = $(e);
+            if ($e.hasClass('info')) {
+                ids.push($e.data('id'));
+                $e.closest('tr').remove();
+            }
+        });
+        $.ajax($this.attr('href'), {
+            data: {'ids': ids}
+        });
+        e.preventDefault();
+    });
+})(jQuery);
+</script>
+{% endblock js %}
+
+{% block content %}
+<h1>Inbox</h1>
+<hr>
+{% include 'MsiMessageBundle:Message:toolbar.html.twig' %}
+<div class="row">
+    <div class="span5" style="height: 396px; overflow-y: scroll;">
+        <table class="msi_message_box table table-bordered" style="margin-bottom: 0;">
+            {% for message in messages %}
+                <tr data-id="{{ message.id }}">
+                    <td>
+                        <div>
+                            <small class="pull-right">{{ message.createdAt|date }}</small>
+                            <strong>{{ message.recipients.first }}</strong>
+                        </div>
+                        <div>
+                            <small>{{ message.subject|truncate }}</small>
+                            <br>
+                            <small class="muted">{{ message.body|striptags|truncate(45) }}</small>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="span7">
+        {% for message in messages if message.id == app.request.query.get('id') %}
+            <table class="table table-bordered table-condensed table-striped">
+                <tr>
+                    <td><small>From</small></td>
+                    <td>{{ message.sender }}</td>
+                </tr>
+                <tr>
+                    <td><small>Date</small></td>
+                    <td>{{ message.createdAt|date }}</td>
+                </tr>
+                <tr>
+                    <td><small>Subject</small></td>
+                    <td>{{ message.subject }}</td>
+                </tr>
+                <tr>
+                    <td><small>To</small></td>
+                    <td>{% for messageInfo in message.messageInfos %}{{ messageInfo.user }}{% endfor %}</td>
+                </tr>
+            </table>
+            {{ message.body|raw }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends 'MsiMessageBundle::layout.html.twig' %}
+
+{% block title %}Trash{% endblock title %}
+
+{% block content_left %}
+<table class="msi_message_box table table-bordered" style="margin-bottom: 0;">
+    {% for message in messages if message.trashedBy.contains(app.user) %}
+        <tr data-id="{{ message.id }}">
+            <td>
+                <div>
+                    <small class="pull-right">{{ message.createdAt|date }}</small>
+                    <strong>{{ message.sender }}</strong>
+                </div>
+                <div>
+                    <small>{{ message.subject|truncate }}</small>
+                    <br>
+                    <small class="muted">{{ message.body|striptags|truncate(45) }}</small>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock content_left %}
+
+{% block content_right %}
+{% include 'MsiMessageBundle:Message:show_content.html.twig' %}
+{% endblock content_right %}

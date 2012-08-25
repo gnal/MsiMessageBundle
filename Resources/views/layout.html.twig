@@ -1,0 +1,29 @@
+{% extends 'MsiAdminBundle::layout.html.twig' %}
+
+{% block css %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('/bundles/msimessage/css/style.css') }}">
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script src="{{ asset('/bundles/msimessage/js/app.js') }}"></script>
+{% endblock js %}
+
+{% block content %}
+<div class="container">
+    {% include 'MsiMessageBundle:Message:toolbar.html.twig' %}
+    <div class="row">
+        <div class="span5" style="height: 396px; overflow-y: scroll;">
+            <div class="msi_message_mailbox_container">
+                {% block content_left %}{% endblock content_left %}
+            </div>
+        </div>
+        <div class="span7" style="height: 396px; overflow-y: scroll;">
+            <div class="msi_message_message_container">
+                {% block content_right %}{% endblock content_right %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
